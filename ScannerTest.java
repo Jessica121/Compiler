@@ -1,18 +1,18 @@
-package cop5556sp17;
+package compiler;
 
-import static cop5556sp17.Scanner.Kind.GT;
-import static cop5556sp17.Scanner.Kind.IDENT;
-import static cop5556sp17.Scanner.Kind.INT_LIT;
-import static cop5556sp17.Scanner.Kind.KW_INTEGER;
-import static cop5556sp17.Scanner.Kind.KW_TRUE;
-import static cop5556sp17.Scanner.Kind.LBRACE;
-import static cop5556sp17.Scanner.Kind.LE;
-import static cop5556sp17.Scanner.Kind.LT;
-import static cop5556sp17.Scanner.Kind.MINUS;
-import static cop5556sp17.Scanner.Kind.NOT;
-import static cop5556sp17.Scanner.Kind.OR;
-import static cop5556sp17.Scanner.Kind.PLUS;
-import static cop5556sp17.Scanner.Kind.RBRACE;
+import static compiler.Scanner.Kind.GT;
+import static compiler.Scanner.Kind.IDENT;
+import static compiler.Scanner.Kind.INT_LIT;
+import static compiler.Scanner.Kind.KW_INTEGER;
+import static compiler.Scanner.Kind.KW_TRUE;
+import static compiler.Scanner.Kind.LBRACE;
+import static compiler.Scanner.Kind.LE;
+import static compiler.Scanner.Kind.LT;
+import static compiler.Scanner.Kind.MINUS;
+import static compiler.Scanner.Kind.NOT;
+import static compiler.Scanner.Kind.OR;
+import static compiler.Scanner.Kind.PLUS;
+import static compiler.Scanner.Kind.RBRACE;
 import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
@@ -24,10 +24,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import cop5556sp17.Scanner.IllegalCharException;
-import cop5556sp17.Scanner.IllegalNumberException;
-import cop5556sp17.Scanner.Kind;
-import cop5556sp17.Scanner.LinePos;
+import compiler.Scanner.IllegalCharException;
+import compiler.Scanner.IllegalNumberException;
+import compiler.Scanner.Kind;
+import compiler.Scanner.LinePos;
 
 public class ScannerTest {
 

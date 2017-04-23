@@ -1,7 +1,7 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.Scanner.Token;
-import cop5556sp17.AST.Type.TypeName;
+import compiler.Scanner.Token;
+import compiler.AST.Type.TypeName;
 
 public abstract class Expression extends ASTNode {
 	public TypeName typeName;

@@ -1,10 +1,14 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.Scanner.Token;
+import compiler.Scanner.Token;
 
 public class IntLitExpression extends Expression {
 
 	public final int value;
+
+	public int getValue() {
+		return value;
+	}
 
 	public IntLitExpression(Token firstToken) {
 		super(firstToken);

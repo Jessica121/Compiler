@@ -1,12 +1,12 @@
-package cop5556sp17;
+package compiler;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import cop5556sp17.Parser.SyntaxException;
-import cop5556sp17.Scanner.IllegalCharException;
-import cop5556sp17.Scanner.IllegalNumberException;
+import compiler.Parser.SyntaxException;
+import compiler.Scanner.IllegalCharException;
+import compiler.Scanner.IllegalNumberException;
 
 public class ParserTest {
 

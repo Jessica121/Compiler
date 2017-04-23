@@ -1,10 +1,18 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.AST.Type.TypeName;
-import cop5556sp17.Scanner.Token;
+import compiler.AST.Type.TypeName;
+import compiler.Scanner.Token;
 
 public abstract class Chain extends Statement {
 	public TypeName typeName;
+	public boolean leftIdent;
+	public boolean isLeftIdent() {
+		return leftIdent;
+	}
+
+	public void setLeftIdent(boolean leftIdent) {
+		this.leftIdent = leftIdent;
+	}
 
 	public Chain(Token firstToken) {
 		super(firstToken);
@@ -25,4 +33,5 @@ public abstract class Chain extends Statement {
 			return false;
 		}
 	}
+	
 }

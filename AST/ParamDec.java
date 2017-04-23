@@ -1,9 +1,17 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.Scanner.Token;
+import compiler.Scanner.Token;
 
 public class ParamDec extends Dec {
-	
+	public int slotNum;
+	public int getSlotNum() {
+		return slotNum;
+	}
+
+	public void setSlotNum(int slotNum) {
+		this.slotNum = slotNum;
+	}
+
 	public ParamDec(Token firstToken, Token ident) {
 		super(firstToken, ident);
 	}

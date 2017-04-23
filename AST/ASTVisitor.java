@@ -1,4 +1,4 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
 public interface ASTVisitor {
 

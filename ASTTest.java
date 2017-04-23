@@ -1,12 +1,12 @@
-package cop5556sp17;
+package compiler;
 
-import static cop5556sp17.Scanner.Kind.ARROW;
-import static cop5556sp17.Scanner.Kind.IDENT;
-import static cop5556sp17.Scanner.Kind.KW_INTEGER;
-import static cop5556sp17.Scanner.Kind.LBRACE;
-import static cop5556sp17.Scanner.Kind.NOTEQUAL;
-import static cop5556sp17.Scanner.Kind.OP_SLEEP;
-import static cop5556sp17.Scanner.Kind.PLUS;
+import static compiler.Scanner.Kind.ARROW;
+import static compiler.Scanner.Kind.IDENT;
+import static compiler.Scanner.Kind.KW_INTEGER;
+import static compiler.Scanner.Kind.LBRACE;
+import static compiler.Scanner.Kind.NOTEQUAL;
+import static compiler.Scanner.Kind.OP_SLEEP;
+import static compiler.Scanner.Kind.PLUS;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -15,27 +15,27 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import cop5556sp17.Parser.SyntaxException;
-import cop5556sp17.Scanner.IllegalCharException;
-import cop5556sp17.Scanner.IllegalNumberException;
-import cop5556sp17.AST.ASTNode;
-import cop5556sp17.AST.AssignmentStatement;
-import cop5556sp17.AST.BinaryChain;
-import cop5556sp17.AST.BinaryExpression;
-import cop5556sp17.AST.Block;
-import cop5556sp17.AST.BooleanLitExpression;
-import cop5556sp17.AST.ConstantExpression;
-import cop5556sp17.AST.Dec;
-import cop5556sp17.AST.FilterOpChain;
-import cop5556sp17.AST.IdentExpression;
-import cop5556sp17.AST.IfStatement;
-import cop5556sp17.AST.IntLitExpression;
-import cop5556sp17.AST.ParamDec;
-import cop5556sp17.AST.Program;
-import cop5556sp17.AST.SleepStatement;
-import cop5556sp17.AST.Statement;
-import cop5556sp17.AST.Tuple;
-import cop5556sp17.AST.WhileStatement;
+import compiler.Parser.SyntaxException;
+import compiler.Scanner.IllegalCharException;
+import compiler.Scanner.IllegalNumberException;
+import compiler.AST.ASTNode;
+import compiler.AST.AssignmentStatement;
+import compiler.AST.BinaryChain;
+import compiler.AST.BinaryExpression;
+import compiler.AST.Block;
+import compiler.AST.BooleanLitExpression;
+import compiler.AST.ConstantExpression;
+import compiler.AST.Dec;
+import compiler.AST.FilterOpChain;
+import compiler.AST.IdentExpression;
+import compiler.AST.IfStatement;
+import compiler.AST.IntLitExpression;
+import compiler.AST.ParamDec;
+import compiler.AST.Program;
+import compiler.AST.SleepStatement;
+import compiler.AST.Statement;
+import compiler.AST.Tuple;
+import compiler.AST.WhileStatement;
 
 public class ASTTest {
 

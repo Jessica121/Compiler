@@ -5,15 +5,15 @@
  * program fragments.
  */
 
-package cop5556sp17;
+package compiler;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import cop5556sp17.TypeCheckVisitor.TypeCheckException;
-import cop5556sp17.AST.ASTNode;
-import cop5556sp17.AST.Expression;
+import compiler.TypeCheckVisitor.TypeCheckException;
+import compiler.AST.ASTNode;
+import compiler.AST.Expression;
 
 public class TypeCheckVisitorTest {
 	

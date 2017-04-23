@@ -1,4 +1,4 @@
-package cop5556sp17;
+package compiler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
 
-import cop5556sp17.AST.Dec;
+import compiler.AST.Dec;
 
 public class SymbolTable {
 

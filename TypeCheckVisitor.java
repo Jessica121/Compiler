@@ -1,33 +1,33 @@
-package cop5556sp17;
+package compiler;
 
-import cop5556sp17.Scanner.Kind;
-import cop5556sp17.Scanner.Token;
-import cop5556sp17.AST.ASTVisitor;
-import cop5556sp17.AST.AssignmentStatement;
-import cop5556sp17.AST.BinaryChain;
-import cop5556sp17.AST.BinaryExpression;
-import cop5556sp17.AST.Block;
-import cop5556sp17.AST.BooleanLitExpression;
-import cop5556sp17.AST.Chain;
-import cop5556sp17.AST.ChainElem;
-import cop5556sp17.AST.ConstantExpression;
-import cop5556sp17.AST.Dec;
-import cop5556sp17.AST.Expression;
-import cop5556sp17.AST.FilterOpChain;
-import cop5556sp17.AST.FrameOpChain;
-import cop5556sp17.AST.IdentChain;
-import cop5556sp17.AST.IdentExpression;
-import cop5556sp17.AST.IdentLValue;
-import cop5556sp17.AST.IfStatement;
-import cop5556sp17.AST.ImageOpChain;
-import cop5556sp17.AST.IntLitExpression;
-import cop5556sp17.AST.ParamDec;
-import cop5556sp17.AST.Program;
-import cop5556sp17.AST.SleepStatement;
-import cop5556sp17.AST.Statement;
-import cop5556sp17.AST.Tuple;
-import cop5556sp17.AST.Type.TypeName;
-import cop5556sp17.AST.WhileStatement;
+import compiler.Scanner.Kind;
+import compiler.Scanner.Token;
+import compiler.AST.ASTVisitor;
+import compiler.AST.AssignmentStatement;
+import compiler.AST.BinaryChain;
+import compiler.AST.BinaryExpression;
+import compiler.AST.Block;
+import compiler.AST.BooleanLitExpression;
+import compiler.AST.Chain;
+import compiler.AST.ChainElem;
+import compiler.AST.ConstantExpression;
+import compiler.AST.Dec;
+import compiler.AST.Expression;
+import compiler.AST.FilterOpChain;
+import compiler.AST.FrameOpChain;
+import compiler.AST.IdentChain;
+import compiler.AST.IdentExpression;
+import compiler.AST.IdentLValue;
+import compiler.AST.IfStatement;
+import compiler.AST.ImageOpChain;
+import compiler.AST.IntLitExpression;
+import compiler.AST.ParamDec;
+import compiler.AST.Program;
+import compiler.AST.SleepStatement;
+import compiler.AST.Statement;
+import compiler.AST.Tuple;
+import compiler.AST.Type.TypeName;
+import compiler.AST.WhileStatement;
 
 public class TypeCheckVisitor implements ASTVisitor {
 
@@ -50,6 +50,12 @@ public class TypeCheckVisitor implements ASTVisitor {
 		chainElem.visit(this, null);
 		if (chain.typeName == TypeName.URL && op.isKind(Kind.ARROW) && chainElem.typeName == TypeName.IMAGE) {
 			binaryChain.setTypeName(TypeName.IMAGE);
+		} else if (chain.typeName == TypeName.IMAGE && op.isKind(Kind.ARROW) && (chainElem instanceof IdentChain)
+				&& chainElem.typeName == TypeName.IMAGE) {
+			binaryChain.setTypeName(TypeName.IMAGE);
+		} else if (chain.typeName == TypeName.INTEGER && op.isKind(Kind.ARROW) && (chainElem instanceof IdentChain)
+				&& chainElem.typeName == TypeName.INTEGER) {
+			binaryChain.setTypeName(TypeName.INTEGER);
 		} else if (chain.typeName == TypeName.FILE && op.isKind(Kind.ARROW) && chainElem.typeName == TypeName.IMAGE) {
 			binaryChain.setTypeName(TypeName.IMAGE);
 		} else if (chain.typeName == TypeName.FRAME && op.isKind(Kind.ARROW) && (chainElem instanceof FrameOpChain)
@@ -90,15 +96,19 @@ public class TypeCheckVisitor implements ASTVisitor {
 		Token op = binaryExpression.getOp();
 		binaryExpression.getE0().visit(this, null);
 		binaryExpression.getE1().visit(this, null);
-		if (e0.typeName == TypeName.INTEGER && e1.typeName == TypeName.INTEGER
-				&& (op.kind == Kind.PLUS || op.kind == Kind.MINUS || op.kind == Kind.TIMES || op.kind == Kind.DIV)) {
+		if (e0.typeName == TypeName.INTEGER && e1.typeName == TypeName.INTEGER && (op.kind == Kind.PLUS
+				|| op.kind == Kind.MINUS || op.kind == Kind.TIMES || op.kind == Kind.DIV || op.kind == Kind.MOD)) {
 			binaryExpression.setTypeName(TypeName.INTEGER);
+		} else if (e0.typeName == TypeName.BOOLEAN && e1.typeName == TypeName.BOOLEAN
+				&& (op.kind == Kind.AND || op.kind == Kind.OR)) {
+			binaryExpression.setTypeName(TypeName.BOOLEAN);
 		} else if (e0.typeName == TypeName.IMAGE && e1.typeName == TypeName.IMAGE
 				&& (op.kind == Kind.PLUS || op.kind == Kind.MINUS)) {
 			binaryExpression.setTypeName(TypeName.IMAGE);
 		} else if (e0.typeName == TypeName.INTEGER && e1.typeName == TypeName.IMAGE && op.kind == Kind.TIMES) {
 			binaryExpression.setTypeName(TypeName.IMAGE);
-		} else if (e0.typeName == TypeName.IMAGE && e1.typeName == TypeName.INTEGER && op.kind == Kind.TIMES) {
+		} else if (e0.typeName == TypeName.IMAGE && e1.typeName == TypeName.INTEGER
+				&& (op.kind == Kind.TIMES || op.kind == Kind.MOD || op.kind == Kind.DIV)) {
 			binaryExpression.setTypeName(TypeName.IMAGE);
 		} else if (e0.typeName == TypeName.INTEGER && e1.typeName == TypeName.INTEGER
 				&& (op.kind == Kind.LT || op.kind == Kind.GT || op.kind == Kind.LE || op.kind == Kind.GE)) {
@@ -111,7 +121,8 @@ public class TypeCheckVisitor implements ASTVisitor {
 		} else if ((op.kind == Kind.EQUAL || op.kind == Kind.NOTEQUAL)) {
 			if (e0.typeName == e1.typeName)
 				binaryExpression.setTypeName(TypeName.BOOLEAN);
-			else throw new TypeCheckException("Illegal Binary Expression Type");
+			else
+				throw new TypeCheckException("Illegal Binary Expression Type");
 		} else
 			throw new TypeCheckException("Illegal Binary Expression Type");
 		return binaryExpression;
@@ -159,15 +170,18 @@ public class TypeCheckVisitor implements ASTVisitor {
 		if (frameOp.isKind(Kind.KW_SHOW) || frameOp.isKind(Kind.KW_HIDE)) {
 			if (frameOpChain.getArg().getExprList().size() == 0)
 				frameOpChain.setTypeName(TypeName.NONE);
-			else throw new TypeCheckException("Illegal type in FrameOpChain");
+			else
+				throw new TypeCheckException("Illegal type in FrameOpChain");
 		} else if (frameOp.isKind(Kind.KW_XLOC) || frameOp.isKind(Kind.KW_YLOC)) {
 			if (frameOpChain.getArg().getExprList().size() == 0)
 				frameOpChain.setTypeName(TypeName.INTEGER);
-			else throw new TypeCheckException("Illegal type in FrameOpChain");
+			else
+				throw new TypeCheckException("Illegal type in FrameOpChain");
 		} else if (frameOp.isKind(Kind.KW_MOVE)) {
 			if (frameOpChain.getArg().getExprList().size() == 2)
 				frameOpChain.setTypeName(TypeName.NONE);
-			else throw new TypeCheckException("Illegal type in FrameOpChain");
+			else
+				throw new TypeCheckException("Illegal type in FrameOpChain");
 		} else
 			throw new TypeCheckException("Illegal type in FrameOpChain");
 		return frameOpChain;
@@ -180,10 +194,12 @@ public class TypeCheckVisitor implements ASTVisitor {
 		// scope
 		// IdentChain.type ident.type
 		// ident.type symtab.lookup(ident.getText()).getType()
+
 		Dec dec = symtab.lookup(identChain.getFirstToken().getText());
-		if (dec != null)
+		if (dec != null) {
 			identChain.setTypeName(dec.getTypeName());
-		else {
+			identChain.setDec(dec);
+		} else {
 			throw new TypeCheckException("Illegal type at visit ident chain");
 		}
 		return identChain;

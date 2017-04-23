@@ -1,4 +1,4 @@
-package cop5556sp17;
+package compiler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,6 +95,10 @@ public class Scanner {
 				return "eof";
 			} else
 				return new StringBuilder().append(chars, pos, pos + length).toString();
+		}
+
+		public Kind getKind() {
+			return kind;
 		}
 
 		// returns a LinePos object representing the line and column of this

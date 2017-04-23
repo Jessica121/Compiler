@@ -1,12 +1,28 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.Scanner.Token;
-import cop5556sp17.AST.Type.TypeName;
+import compiler.Scanner.Token;
+import compiler.AST.Type.TypeName;
 
 public class Dec extends ASTNode {
 	
 	final Token ident;
 	public TypeName typeName;
+	public int slotNum;
+	public boolean initialized;
+	public boolean getInitialized() {
+		return initialized;
+	}
+
+	public void setInitialized(boolean initialized) {
+		this.initialized = initialized;
+	}
+	public int getSlotNum() {
+		return slotNum;
+	}
+
+	public void setSlotNum(int slotNum) {
+		this.slotNum = slotNum;
+	}
 
 	public Dec(Token firstToken, Token ident) {
 		super(firstToken);

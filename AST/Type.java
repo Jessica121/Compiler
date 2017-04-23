@@ -1,8 +1,8 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.Parser;
-import cop5556sp17.Parser.SyntaxException;
-import cop5556sp17.Scanner.Token;
+import compiler.Parser;
+import compiler.Parser.SyntaxException;
+import compiler.Scanner.Token;
 
 public class Type  {
 	
@@ -20,13 +20,13 @@ public class Type  {
 	}
 
 	public static enum TypeName {
-		INTEGER, 
-		BOOLEAN, 
-		IMAGE, 
-		FRAME,
-	    URL, 
-	    FILE, 
-	    NONE;
+		INTEGER("I"), 
+		BOOLEAN("Z"), 
+		IMAGE("Ljava/awt/image/BufferedImage;"), 
+		FRAME("Lcompiler/PLPRuntimeFrame;"),
+	    URL("Ljava/net/URL;"), 
+	    FILE("Ljava/io/File;"), 
+	    NONE(null);
 		
 		public boolean isType(TypeName... types){
 			for (TypeName type: types){
@@ -34,5 +34,22 @@ public class Type  {
 			}
 			return false;
 		}
+		
+		TypeName(String jvmType){
+			this.jvmType = jvmType;
+		}
+		
+		String jvmType;
+
+		public String getJVMTypeDesc() {
+			return jvmType;
+		}
+
+		//precondition: is not I or Z
+		public String getJVMClass(){
+			return jvmType.substring(1,jvmType.length()-1);  //removes L and ;
+	}
+
+
 }
 }

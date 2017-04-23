@@ -1,6 +1,6 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.Scanner.Token;
+import compiler.Scanner.Token;
 
 public class BinaryExpression extends Expression {
 

@@ -1,6 +1,7 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
-import cop5556sp17.Scanner.Token;
+import compiler.AST.Type.TypeName;
+import compiler.Scanner.Token;
 
 public class IdentLValue extends ASTNode {
 	public Dec dec;
@@ -29,6 +30,26 @@ public class IdentLValue extends ASTNode {
 
 	public String getText() {
 		return firstToken.getText();
+	}
+	public TypeName typeName;
+	public TypeName getTypeName() {
+		return typeName;
+	}
+
+	public boolean setTypeName(TypeName type)
+	{
+		try
+		{
+			if(type != null)			
+				this.typeName = type;
+			else
+				this.typeName = Type.getTypeName(firstToken);
+			return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 	}
 
 }

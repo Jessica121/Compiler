@@ -1,8 +1,8 @@
-package cop5556sp17.AST;
+package compiler.AST;
 
 import java.util.ArrayList;
 
-import cop5556sp17.Scanner.Token;
+import compiler.Scanner.Token;
 
 public class Program extends ASTNode {
 
